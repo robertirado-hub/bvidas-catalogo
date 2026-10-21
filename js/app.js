@@ -1,6 +1,6 @@
 /* bvidas - interfaz: pinta el catálogo, la ventana de producto, el pedido y los movimientos. */
 import { FREE_FROM, CATS, SHEET_CSV_URL } from './config.js';
-import { P, byId } from './products.js';
+import { P, byId, specOf } from './products.js';
 import { pack, frames } from './packs.js';
 import { cart, money, count, total, waLink, setQty, onChange, pruneCart } from './cart.js';
 import { applyCSV, restoreLocal, normalizeSheetUrl } from './sheet.js';
@@ -41,7 +41,7 @@ function cardHtml(p, i, anim){
     </button>
     <div class="card-body">
       <button class="name open" type="button" data-act="open" data-id="${p.id}">${p.n}</button>
-      <div class="meta">${p.fmt} 355 ml · Sin alcohol</div>
+      <div class="meta">${p.style?p.style+' · ':''}${specOf(p)} · Sin alcohol</div>
       <div class="buy" data-buy="${p.id}"></div>
     </div></article>`;
 }
@@ -177,7 +177,7 @@ function renderDetail(){
     </div>
     <div class="info">
       <h2>${p.n}</h2>
-      <div class="tags"><span class="tag alc">Sin alcohol</span><span class="tag">${p.fmt} 355 ml</span>${p.origin?`<span class="tag">${p.origin}</span>`:''}</div>
+      <div class="tags"><span class="tag alc">Sin alcohol</span><span class="tag">${specOf(p)}</span>${p.style?`<span class="tag">${p.style}</span>`:''}${p.origin?`<span class="tag">${p.origin}</span>`:''}</div>
       ${p.desc?`<p class="desc">${p.desc}</p>`:''}
       <dl>${p.ing.length?`<div><dt>Qué tomas</dt><dd>${p.ing.join(', ')}.</dd></div>`:''}${p.when?`<div><dt>Cuándo va</dt><dd>${p.when}</dd></div>`:''}</dl>
       <div class="buy" data-buy="${p.id}"></div>
@@ -187,7 +187,7 @@ function renderDetail(){
 function renderOrder(){
   const ids=Object.keys(cart);
   panel.innerHTML=`<div class="order"><button class="x" type="button" data-act="close" aria-label="Cerrar">×</button><h2>Tu pedido</h2>`+
-  (ids.length?`<div class="lines">${ids.map(id=>`<div class="line"><div class="l"><b>${byId[id].n}</b><span>${byId[id].fmt} 355 ml · ${money(byId[id].price)}</span></div>${stepHtml(id)}</div>`).join('')}</div>
+  (ids.length?`<div class="lines">${ids.map(id=>`<div class="line"><div class="l"><b>${byId[id].n}</b><span>${specOf(byId[id])} · ${money(byId[id].price)}</span></div>${stepHtml(id)}</div>`).join('')}</div>
     <div class="total"><span>Total</span><span>${money(total())}</span></div>
     <p class="note">${count()>=FREE_FROM?'Tu pedido en CDMX lleva envío gratis.':`Te faltan ${FREE_FROM-count()} piezas para envío gratis en CDMX.`} El costo de envío al interior se confirma por WhatsApp.</p>
     <a class="btn" href="${waLink()}" target="_blank" rel="noopener">Pedir por WhatsApp</a>`

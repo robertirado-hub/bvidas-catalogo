@@ -39,3 +39,8 @@ export function setProducts(list) {
   Object.keys(byId).forEach(k => delete byId[k]);
   list.forEach(x => { byId[x.id] = x; });
 }
+
+/* Datos de presentación (con valores por defecto para los productos de respaldo). */
+export const mlOf = x => x.ml || 355;
+export const unitsOf = x => x.units || 1;
+export const specOf = x => [x.fmt, mlOf(x) + ' ml', unitsOf(x) > 1 ? unitsOf(x) + ' piezas' : ''].filter(Boolean).join(' · ');

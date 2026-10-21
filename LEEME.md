@@ -37,11 +37,15 @@ Tu hoja de Google ES el catálogo: cambias un precio o una foto en la hoja y el 
    (Alternativa: Archivo > Compartir > Publicar en la web > CSV, que tarda unos 5 minutos en reflejar cambios.)
 3. Pega el enlace en `js/config.js`, en `SHEET_CSV_URL`, o pruébalo con el botón "Sincronizar catálogo" del pie de la página.
 
-Columnas (primera fila): `id, tipo, nombre, precio, presentacion, descripcion, ingredientes, cuando, origen, fotos, nombre_corto, color, color_texto, activo`
-- Obligatorias: `tipo`, `nombre`, `precio`.
-- `presentacion`: Lata o Botella. `ingredientes` y `fotos` van separados por `|`.
-- `fotos`: enlaces https (o nombres de archivo en `images/products/<id>/`). Los enlaces de Google Drive funcionan si el archivo está compartido como "cualquier persona con el enlace".
-- `activo`: escribe NO para ocultar un producto sin borrarlo.
-- Un `tipo` nuevo crea su sección solo.
-- Los cambios en la hoja tardan unos minutos en publicarse. Si la hoja falla, el sitio muestra la última copia guardada o `js/products.js`.
-- Cualquiera con el enlace puede ver la hoja publicada. No pongas costos ni datos privados en esa pestaña.
+Columnas de la hoja (primera fila, en este orden; el orden no es obligatorio):
+`A SKU | B CATEGORIA | C NOMBRE | D UNIDADES | E MILILITROS | F PRECIO | G ESTILO o dato | H DESCRIPCION | I IMAGEN 1 | J IMAGEN 2 | K IMAGEN 3`
+- Obligatorias: `CATEGORIA`, `NOMBRE` y `PRECIO`.
+- `SKU` es tu clave interna (se usa para identificar el producto).
+- `UNIDADES`: piezas que trae el producto (1 si es una sola). Cuenta para el envío gratis: un producto de 6 suma 6 piezas.
+- `MILILITROS`: si está vacío se usa 355.
+- `ESTILO o dato`: aparece junto al nombre (por ejemplo Lager, IPA, Jamaica).
+- `IMAGEN 1 a 3`: enlaces https (de Drive funcionan si el archivo está compartido como "cualquier persona con el enlace") o nombres de archivo dentro de `images/products/<sku>/`.
+- Cada CATEGORIA distinta crea una sección, en el orden en que aparece en la hoja. Los colores se alternan solos.
+- Columnas opcionales: `PRESENTACION` (Lata o Botella, solo cambia el dibujo y el texto), `INGREDIENTES` (separados por |), `CUANDO`, `ORIGEN`, `ACTIVO` (escribe NO para ocultar un producto).
+- Los cambios en la hoja tardan unos minutos si usas "Publicar en la web". Si la hoja falla, el sitio muestra la última copia guardada o `js/products.js`.
+- Cualquiera con el enlace puede ver la hoja. No pongas costos ni datos privados en esa pestaña.
