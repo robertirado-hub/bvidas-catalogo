@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>bvidas - Bebidas con vida</title>
+<meta name="description" content="Catálogo de bebidas mexicanas sin alcohol, artesanales y de pymes independientes. Pedido por WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="bvidas - Bebidas con vida">
+<meta property="og:description" content="Mira qué lleva cada bebida antes de pedir. Pedido por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="bvidas, inicio">bvidas</a>
+    <nav class="chips" id="chips" aria-label="Tipos de bebida"></nav>
+    <button class="btn order-btn" id="orderTop" data-act="order" type="button">Mi pedido <span id="topCount">(0)</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Bebidas<br>con vida</h1>
+        <p class="lead">Bebidas mexicanas, artesanales y de pymes independientes. Mira qué lleva cada una antes de pedir.</p>
+        <div class="cta">
+          <a class="btn dark" href="#cervezas">Ver todo el catálogo</a>
+          <a class="btn" href="#como-pedir" style="background:var(--white)">Cómo pedir</a>
+        </div>
+      </div>
+      <div class="stage" id="stage" aria-hidden="true"></div>
+    </div>
+  </section>
+  <div id="cats"></div>
+
+  <section class="how" id="como-pedir" style="scroll-margin-top:var(--hh)">
+    <div class="wrap">
+      <h2 data-r>Pide en tres pasos</h2>
+      <ol class="steps">
+        <li data-r style="--d:0ms"><h3>Elige lo que se te antoje</h3><p>Abre cada bebida, mira sus fotos y lo que lleva. Agrega las que quieras.</p></li>
+        <li data-r style="--d:90ms"><h3>Arma tu pedido</h3><p>La barra de abajo te va diciendo cuánto llevas y cuánto falta para el envío gratis.</p></li>
+        <li data-r style="--d:180ms"><h3>Mándalo por WhatsApp</h3><p>Te llega el mensaje ya escrito. Solo agregas tu dirección y listo.</p></li>
+      </ol>
+      <div class="ship">
+        <div data-r><strong>Envío gratis en CDMX</strong><p>Con pedidos de 8 piezas o más. Lo llevamos nosotros.</p></div>
+        <div data-r style="--d:90ms"><strong>Al resto del país, cada semana</strong><p>Los envíos al interior de la república salen una vez por semana.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div><strong>Pedidos</strong>Por WhatsApp</div>
+      <div><strong>Instagram</strong><a href="https://instagram.com/bvidasmx">@bvidasmx</a></div>
+      <div><strong>Todo en 355 ml</strong>Latas y botellas</div>
+      <div><strong>Catálogo</strong><button class="btn" type="button" data-act="sync" id="syncBtn">Sincronizar catálogo</button><div class="sync-msg" id="syncMsg"></div></div>
+    </div>
+    <div class="big" aria-hidden="true">bvidas</div>
+  </div>
+</footer>
+
+<div class="bar" id="bar" role="region" aria-label="Resumen del pedido">
+  <div class="in">
+    <div class="txt">
+      <b id="barTitle"></b>
+      <div class="track"><i id="barFill"></i></div>
+      <div class="small" id="barNote"></div>
+    </div>
+    <button class="link" data-act="order" type="button">Ver pedido</button>
+    <a class="btn" id="barWa" href="#" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+  </div>
+</div>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="Detalle">
+  <div class="panel" id="panel"></div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
