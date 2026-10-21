@@ -14,6 +14,16 @@ const norm = s => String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g
   .trim().toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/* Acepta el enlace normal de la hoja (el de la barra del navegador) o el CSV publicado.
+   Con el enlace normal, la hoja debe estar compartida como "Cualquier persona con el enlace: lector". */
+export function normalizeSheetUrl(url) {
+  url = String(url).trim();
+  const m = url.match(/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+  if (!m || /\/d\/e\//.test(url) || /[?&]output=csv/.test(url) || /\/gviz\//.test(url)) return url;
+  const gid = (url.match(/[?#&]gid=(\d+)/) || [])[1];
+  return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv&headers=1` + (gid ? `&gid=${gid}` : '');
+}
+
 export function parseCSV(text) {
   text = String(text).replace(/^﻿/, '');
   const rows = []; let row = [], f = '', q = false;

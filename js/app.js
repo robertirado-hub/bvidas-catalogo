@@ -3,7 +3,7 @@ import { FREE_FROM, CATS, SHEET_CSV_URL } from './config.js';
 import { P, byId } from './products.js';
 import { pack, frames } from './packs.js';
 import { cart, money, count, total, waLink, setQty, onChange, pruneCart } from './cart.js';
-import { applyCSV, restoreLocal } from './sheet.js';
+import { applyCSV, restoreLocal, normalizeSheetUrl } from './sheet.js';
 
 function stepHtml(id){
   const q=cart[id]||0;
@@ -102,8 +102,8 @@ function updateStatus(){ const el = document.getElementById('syncMsg'); if (el) 
 async function fetchSheet(url){
   const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 8000);
   try {
-    const res = await fetch(url, { cache: 'no-store', signal: ctl.signal });
-    if (!res.ok) throw new Error('El enlace respondió con error ' + res.status + '. Revisa que la hoja esté publicada en la web como CSV.');
+    const res = await fetch(normalizeSheetUrl(url), { cache: 'no-store', signal: ctl.signal });
+    if (!res.ok) throw new Error('El enlace respondió con error ' + res.status + '. Revisa que la hoja esté compartida como "Cualquier persona con el enlace" o publicada en la web como CSV.');
     return await res.text();
   } catch (e) {
     if (e.name === 'AbortError') throw new Error('La hoja tardó demasiado en responder.');
@@ -137,9 +137,9 @@ async function boot(){
 function renderSyncPanel(msg, kind){
   panel.innerHTML = `<div class="order"><button class="x" type="button" data-act="close" aria-label="Cerrar">×</button>
     <h2>Sincronizar catálogo</h2>
-    <p class="note">Pega el enlace CSV de tu hoja de Google (Archivo > Compartir > Publicar en la web > CSV) y toca Sincronizar.</p>
-    <label class="note" for="sheetUrl">Enlace CSV de la hoja</label>
-    <input id="sheetUrl" class="field" type="url" inputmode="url" autocomplete="off" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" value="${esc(sheetUrl() || '')}">
+    <p class="note">Pega el enlace de tu hoja de Google (compartida como "Cualquier persona con el enlace") y toca Sincronizar. También sirve el enlace CSV de Archivo > Compartir > Publicar en la web.</p>
+    <label class="note" for="sheetUrl">Enlace de la hoja</label>
+    <input id="sheetUrl" class="field" type="url" inputmode="url" autocomplete="off" placeholder="https://docs.google.com/spreadsheets/d/..." value="${esc(sheetUrl() || '')}">
     <button class="btn" type="button" data-act="syncgo">Sincronizar ahora</button>
     <button class="btn alt" type="button" data-act="syncreset">Volver a los productos de respaldo</button>
     <div class="msg ${kind || ''}" id="syncOut" role="status">${msg || 'Ahora: ' + statusText()}</div></div>`;

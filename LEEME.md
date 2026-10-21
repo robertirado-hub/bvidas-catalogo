@@ -31,9 +31,11 @@ En `js/config.js` agrega una línea a `CATS` con `id`, `t` (nombre), `f` (color:
 Evita dos tipos seguidos con el mismo color.
 
 ## Conectar Google Sheets (nombre, precio, fotos, etc.)
+Tu hoja de Google ES el catálogo: cambias un precio o una foto en la hoja y el sitio lo toma al cargar.
 1. En Google Sheets: Archivo > Importar > Subir > `plantilla-productos.csv` > "Reemplazar hoja de cálculo".
-2. Archivo > Compartir > **Publicar en la web** > elige la pestaña de productos y el formato **Valores separados por comas (.csv)** > Publicar. Copia el enlace.
-3. Pega el enlace en `js/config.js`, en `SHEET_CSV_URL`. Listo: el sitio lee la hoja cada vez que carga.
+2. Comparte la hoja: botón Compartir > "Cualquier persona con el enlace" > Lector. Copia el enlace de la barra del navegador.
+   (Alternativa: Archivo > Compartir > Publicar en la web > CSV, que tarda unos 5 minutos en reflejar cambios.)
+3. Pega el enlace en `js/config.js`, en `SHEET_CSV_URL`, o pruébalo con el botón "Sincronizar catálogo" del pie de la página.
 
 Columnas (primera fila): `id, tipo, nombre, precio, presentacion, descripcion, ingredientes, cuando, origen, fotos, nombre_corto, color, color_texto, activo`
 - Obligatorias: `tipo`, `nombre`, `precio`.
